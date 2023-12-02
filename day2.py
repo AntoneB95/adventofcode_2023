@@ -3,6 +3,7 @@ import re
 with open('day2_input.txt', 'r') as file:
     input_array  = file.readlines()
 
+## PART ONE ##
 def daytwo (input_array):
     # set cube counts
     red_cubes = 12
@@ -49,4 +50,45 @@ def daytwo (input_array):
     # return result
     return result
 
+
+## PART TWO ##
+def daytwo_mod (input_array):
+    result = 0
+    
+    for game in input_array:
+        max_red = max_green = max_blue = 0
+        
+        #split game into turns
+        turns = game.split(';')
+        
+        for turn in turns:
+            # check reds
+            try:
+                red = int(re.search(r'(\d+) red', turn).group(1))
+            except:
+                red = 0
+            if red > max_red:
+                max_red = red
+            # check greens
+            try:
+                green = int(re.search(r'(\d+) green', turn).group(1))
+            except:
+                green = 0
+            if green > max_green:
+                max_green = green
+            # check blues
+            try:
+                blue = int(re.search(r'(\d+) blue', turn).group(1))
+            except:
+                blue = 0
+            if blue > max_blue:
+                max_blue = blue
+                
+        # calculate result
+        result = result + (max_red * max_green * max_blue)
+        
+    return result
+
+## RESULTS
 print(daytwo(input_array))
+print(daytwo_mod(input_array))
